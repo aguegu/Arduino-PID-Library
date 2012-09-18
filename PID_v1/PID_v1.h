@@ -50,27 +50,27 @@ public:
 private:
 	void initialize();
 
-	double dispKp; // * we'll hold on to the tuning parameters in user-entered
-	double dispKi; //   format for display purposes
-	double dispKd; //
+	double _kp_disp; // * we'll hold on to the tuning parameters in user-entered
+	double _ki_disp; //   format for display purposes
+	double _kd_disp; //
 
-	double kp; // * (P)roportional Tuning Parameter
-	double ki; // * (I)ntegral Tuning Parameter
-	double kd; // * (D)erivative Tuning Parameter
+	double _kp; // * (P)roportional Tuning Parameter
+	double _ki; // * (I)ntegral Tuning Parameter
+	double _kd; // * (D)erivative Tuning Parameter
 
-	int controllerDirection;
+	int _controller_direction;
 
-	double *myInput; // * Pointers to the Input, Output, and Setpoint variables
-	double *myOutput; //   This creates a hard link between the variables and the
-	double *mySetpoint; //   PID, freeing the user from having to constantly tell us
+	double *_pInput; // * Pointers to the Input, Output, and Setpoint variables
+	double *_pOutput; //   This creates a hard link between the variables and the
+	double *_pSetpoint; //   PID, freeing the user from having to constantly tell us
 						//   what these values are.  with pointers we'll just know.
 
-	unsigned long lastTime;
-	double ITerm, lastInput;
+	unsigned long _last_time;
+	double _i_term, _last_input;
 
-	unsigned long SampleTime;
-	double outMin, outMax;
-	bool inAuto;
+	unsigned long _sample_time;
+	double _out_min, _out_max;
+	bool _inAuto;
 };
 #endif
 
