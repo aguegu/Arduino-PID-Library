@@ -3,6 +3,8 @@
  * by Brett Beauregard <br3ttb@gmail.com> brettbeauregard.com
  *
  * This Library is licensed under a GPLv3 License
+ *
+ * modified by Weihong Guan (aGuegu) on Sep, 2012
  **********************************************************************************************/
 
 #include "PID_v1.h"
@@ -23,6 +25,7 @@ PID::PID(double* pInput, double* pOutput, double* pSetpoint, double kp,
 
 	_last_time = millis() - _sample_time;
 	_inAuto = false;
+
 	_pOutput = pOutput;
 	_pInput = pInput;
 	_pSetpoint = pSetpoint;
@@ -37,18 +40,22 @@ void PID::compute()
 {
 	if (!_inAuto)
 		return;
+
 	unsigned long now = millis();
 	unsigned long time_change = (now - _last_time);
+
 	if (time_change >= _sample_time)
 	{
 		/*Compute all the working error variables*/
 		double input = *_pInput;
 		double error = *_pSetpoint - input;
 		_i_term += (_ki * error);
+
 		if (_i_term > _out_max)
 			_i_term = _out_max;
 		else if (_i_term < _out_min)
 			_i_term = _out_min;
+
 		double dInput = (input - _last_input);
 
 		/*Compute PID Output*/
@@ -58,6 +65,7 @@ void PID::compute()
 			output = _out_max;
 		else if (output < _out_min)
 			output = _out_min;
+
 		*_pOutput = output;
 
 		/*Remember some variables for next time*/
@@ -102,7 +110,7 @@ void PID::setSampleTime(int sample_time)
 		double ratio = (double) sample_time / (double) _sample_time;
 		_ki *= ratio;
 		_kd /= ratio;
-		sample_time = (unsigned long) sample_time;
+		_sample_time = (unsigned long) sample_time;
 	}
 }
 
